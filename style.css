@@ -1,25 +1,68 @@
 
+* {
+    font-family: "Gluten", cursive;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+    font-size: 20px;
+  }
+  
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 60%;
+    margin: 20px auto 0;
+    padding-top: 20px;
+}
+
+header div:first-child{
+    text-align: center;
+    font-weight: 900;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+header div:last-child {
+    font-size: 30px;
+    padding-left: 60px;
+}
+.container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
 .board {
     display: grid;
     height: 500px;
     width: 500px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    border: 1px solid black;
-    gap: 2px;
     padding: 2px;
-    background-color: yellow;
   }
   
-  .cell {
+.cell {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 2rem;
-    border: 1px solid grey;
-    background: lightyellow;
-    cursor: pointer;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+  }
+
+.cell:nth-child(3n){
+    border-right: none;
+  }
+
+.cell:nth-last-child(-n + 3){
+    border-bottom: none;
   }
 
   .play-game {

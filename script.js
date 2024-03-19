@@ -73,11 +73,11 @@ function Cell() {
       addToken,
       getValue
     };
-  }
+}
 
 
 
-  function GameController(
+function GameController(
     playerOneName = "Player One",
     playerTwoName = "Player Two"
   ){
@@ -106,13 +106,88 @@ function Cell() {
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
+    const checkRows = () => {
+        for (let row = 0; row < board.getBoard().length; row++) {
+            const firstCell = board.getBoard()[row][0].getValue();
+            if (firstCell !== 0 && board.getBoard()[row].every(cell => cell.getValue() === firstCell)) {
+                return firstCell;
+            }
+        }
+        return 0;
+    };
+
+    const checkColumns = () => {
+        for (let col = 0; col < board.getBoard()[0].length; col++) {
+            const firstCell = board.getBoard()[0][col].getValue();
+            if (firstCell !== 0) {
+                let isWin = true;
+                for (let row = 1; row < board.getBoard().length; row++) {
+                    if (board.getBoard()[row][col].getValue() !== firstCell) {
+                        isWin = false;
+                        break;
+                    }
+                }
+                if (isWin) return firstCell;
+            }
+        }
+        return 0;
+    };
+
+    const checkDiagonals = () => {
+        const mainDiagonal = [];
+        const antiDiagonal = [];
+        const size = board.getBoard().length;
+
+        for (let i = 0; i < size; i++) {
+            mainDiagonal.push(board.getBoard()[i][i].getValue());
+            antiDiagonal.push(board.getBoard()[i][size - 1 - i].getValue());
+        }
+
+        if (mainDiagonal.every(cell => cell === mainDiagonal[0]) && mainDiagonal[0] !== 0) {
+            return mainDiagonal[0];
+        }
+
+        if (antiDiagonal.every(cell => cell === antiDiagonal[0]) && antiDiagonal[0] !== 0) {
+            return antiDiagonal[0];
+        }
+
+        return 0;
+    };
+
+    const checkWin = () => {
+        const rowWin = checkRows();
+        if (rowWin !== 0) return rowWin;
+
+        const columnWin = checkColumns();
+        if (columnWin !== 0) return columnWin;
+
+        const diagonalWin = checkDiagonals();
+        if (diagonalWin !== 0) return diagonalWin;
+
+        return 0;
+    };
+
+    const checkGameOver = () => {
+        const isBoardFull = board.getBoard().every(row => row.every(cell => cell.getValue() !== 0));
+        const winner = checkWin();
+        return isBoardFull || winner !== 0;
+    };
+
     const playRound = () => {
         // Drop a token for the current player
-        console.log(
-            `Dropping ${getActivePlayer().name}'s token...`
-        );
+        console.log(`Dropping ${getActivePlayer().name}'s token...`);
         board.dropToken(getActivePlayer().token);
 
+        const winner = checkWin();
+        if(winner !== 0) {
+            console.log(`${players[winner-1].name } wins!`);
+            return;
+        }
+
+        if (checkGameOver()) {
+            console.log("Game over! It's a tie!");
+            return;
+        }
 
         //Switch player turn
         switchPlayerTurn();
@@ -124,9 +199,11 @@ function Cell() {
 
 
     return { playRound, getActivePlayer, getBoard:board.getBoard};
-  }
+}
 
-  function ScreenController() {
+const game = GameController();
+
+function ScreenController() {
     const game = GameController();
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
@@ -147,13 +224,13 @@ function Cell() {
       board.forEach(row => {
         row.forEach((cell, index) => {
           // Anything clickable should be a button!!
-          const cellButton = document.createElement("button");
-          cellButton.classList.add("cell");
+          const div = document.createElement("div");
+          div.classList.add("cell");
           // Create a data attribute to identify the column
           // This makes it easier to pass into our `playRound` function 
-          cellButton.dataset.column = index
-          cellButton.textContent = cell.getValue();
-          boardDiv.appendChild(cellButton);
+          div.dataset.column = index;
+          div.textContent = cell.getValue();
+          boardDiv.appendChild(div);
         })
       })
     }
