@@ -30,31 +30,31 @@ This is a simple Tic Tac Toe game implemented using JavaScript, HTML, and CSS. T
 ### HTML
 The HTML file contains the structure of the game, including the board, player turn display, and restart button.
     ```html
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width initial-scale=1.0">
-            <link rel="stylesheet" href="style.css">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
-            <title>Project: Tic Tac Toe</title>
-        </head>
-        <body>
-            <header>
-                <div>
-                    <h1>-tic - tac - toe -</h1>
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width initial-scale=1.0">
+                <link rel="stylesheet" href="style.css">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
+                <title>Project: Tic Tac Toe</title>
+            </head>
+            <body>
+                <header>
+                    <div>
+                        <h1>-tic - tac - toe -</h1>
+                    </div>
+                    <div class="turn"></div>
+                </header>
+                <div class="container">
+                    <div class="board"></div>
+                    <button class="start-game">Restart Game</button>
                 </div>
-                <div class="turn"></div>
-            </header>
-            <div class="container">
-                <div class="board"></div>
-                <button class="start-game">Restart Game</button>
-            </div>
-            <script src="script.js"></script>
-        </body>
-    </html>
+                <script src="script.js"></script>
+            </body>
+        </html>
 
 ### CSS
 The CSS file defines the styling for the game, including the board layout and appearance.
