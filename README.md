@@ -29,8 +29,8 @@ This is a simple Tic Tac Toe game implemented using JavaScript, HTML, and CSS. T
 ## Code Overview
 ### HTML
 The HTML file contains the structure of the game, including the board, player turn display, and restart button.
-   ```sh
-   <!DOCTYPE html>
+    ```sh
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -54,4 +54,244 @@ The HTML file contains the structure of the game, including the board, player tu
         </div>
         <script src="script.js"></script>
     </body>
-  </html>
+    </html>
+
+### CSS
+The CSS file defines the styling for the game, including the board layout and appearance.
+    ```sh
+    * {
+        font-family: "Gluten", cursive;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
+        font-variation-settings: "slnt" 0;
+        font-size: 20px;
+    }
+    
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        width: 60%;
+        margin: 20px auto 0;
+        padding-top: 20px;
+    }
+
+    header div:first-child h1 {
+        text-align: center;
+        font-weight: 900;
+        font-size: 50px;
+    }
+
+    header div:last-child {
+        font-size: 30px;
+        padding-left: 60px;
+    }
+    .container {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .board {
+        display: grid;
+        height: 500px;
+        width: 500px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        padding: 2px;
+    }
+    
+    .cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 2rem;
+        border-bottom: 2px solid black;
+        border-right: 2px solid black;
+    }
+
+    .cell:nth-child(3n){
+        border-right: none;
+    }
+
+    .cell:nth-last-child(-n + 3){
+        border-bottom: none;
+    }
+
+    .play-game {
+        margin-top: 20px;
+        padding: 10px 20px;
+    }
+
+### JavaScript
+The JavaScript file contains the logic for the game, including the game board management, player turns, win and tie detection, and UI updates.
+    ```sh
+        // script.js
+    function Gameboard() {
+        const rows = 3;
+        const columns = 3;
+        let board = [];
+
+        const initBoard = () => {
+            board = [];
+            for (let i = 0; i < rows; i++) {
+                board[i] = [];
+                for (let j = 0; j < columns; j++) {
+                    board[i].push(Cell());
+                }
+            }
+        };
+
+        initBoard();
+
+        const getBoard = () => board;
+
+        const addToken = (row, col, player) => {
+            if (board[row][col].getValue() === "") {
+                board[row][col].addToken(player);
+                return true;
+            }
+            return false;
+        };
+
+        const resetBoard = () => {
+            initBoard();
+        };
+
+        const printBoard = () => {
+            const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
+            console.log(boardWithCellValues);
+        };
+
+        return { getBoard, addToken, resetBoard, printBoard };
+    }
+
+    function Cell() {
+        let value = "";
+
+        const addToken = (player) => {
+            value = player;
+        };
+
+        const getValue = () => value;
+
+        return {
+            addToken,
+            getValue
+        };
+    }
+
+    function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
+        const board = Gameboard();
+
+        const players = [
+            { name: playerOneName, token: "X" }, 
+            { name: playerTwoName, token: "O" }
+        ];
+
+        let activePlayer = players[0];
+        const switchPlayerTurn = () => {
+            activePlayer = activePlayer === players[0] ? players[1] : players[0];
+        };
+
+        const getActivePlayer = () => activePlayer;
+
+        const printNewRound = () => {
+            board.printBoard();
+            console.log(`${getActivePlayer().name}'s turn.`);
+        };
+
+        const checkRows = () => {
+            for (let row = 0; row < board.getBoard().length; row++) {
+                const firstCell = board.getBoard()[row][0].getValue();
+                if (firstCell !== "" && board.getBoard()[row].every(cell => cell.getValue() === firstCell)) {
+                    return firstCell;
+                }
+            }
+            return "";
+        };
+
+        const checkColumns = () => {
+            for (let col = 0; col < board.getBoard()[0].length; col++) {
+                const firstCell = board.getBoard()[0][col].getValue();
+                if (firstCell !== "") {
+                    let isWin = true;
+                    for (let row = 1; row < board.getBoard().length; row++) {
+                        if (board.getBoard()[row][col].getValue() !== firstCell) {
+                            isWin = false;
+                            break;
+                        }
+                    }
+                    if (isWin) return firstCell;
+                }
+            }
+            return "";
+        };
+
+        const checkDiagonals = () => {
+            const mainDiagonal = [];
+            const antiDiagonal = [];
+            const size = board.getBoard().length;
+
+            for (let i = 0; i < size; i++) {
+                mainDiagonal.push(board.getBoard()[i][i].getValue());
+                antiDiagonal.push(board.getBoard()[i][size - 1 - i].getValue());
+            }
+
+            if (mainDiagonal.every(cell => cell === mainDiagonal[0]) && mainDiagonal[0] !== "") {
+                return mainDiagonal[0];
+            }
+
+            if (antiDiagonal.every(cell => cell === antiDiagonal[0]) && antiDiagonal[0] !== "") {
+                return antiDiagonal[0];
+            }
+
+            return "";
+        };
+
+        const checkWin = () => {
+            const rowWin = checkRows();
+            if (rowWin !== "") return rowWin;
+
+            const columnWin = checkColumns();
+            if (columnWin !== "") return columnWin;
+
+            const diagonalWin = checkDiagonals();
+            if (diagonalWin !== "") return diagonalWin;
+
+            return "";
+        };
+
+        const checkGameOver = () => {
+            const isBoardFull = board.getBoard().every(row => row.every(cell => cell.getValue() !== ""));
+            const winner = checkWin();
+            return isBoardFull || winner !== "";
+        };
+
+        const playRound = (row, col) => {
+            if (board.addToken(row, col, getActivePlayer().token)) {
+                const winner = checkWin();
+                if (winner !== "") {
+                    console.log(`${players.find(player => player.token === winner).name} wins!`);
+                    return winner;
+                }
+
+                if (checkGameOver()) {
+                    console.log("Game over! It's a tie!");
+                    return "tie";
+                }
+
+                switchPlayerTurn();
+                printNewRound();
+            } else {
+                console.log("Cell is already occupied. Try again.");
+            }
+        };
+
+        const resetGame =
