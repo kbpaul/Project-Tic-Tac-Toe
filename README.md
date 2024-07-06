@@ -30,109 +30,109 @@ This is a simple Tic Tac Toe game implemented using JavaScript, HTML, and CSS. T
 ### HTML
 The HTML file contains the structure of the game, including the board, player turn display, and restart button.
     ```sh
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
-        <title>Project: Tic Tac Toe</title>
-    </head>
-    <body>
-        <header>
-            <div>
-                <h1>-tic - tac - toe -</h1>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width initial-scale=1.0">
+            <link rel="stylesheet" href="style.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
+            <title>Project: Tic Tac Toe</title>
+        </head>
+        <body>
+            <header>
+                <div>
+                    <h1>-tic - tac - toe -</h1>
+                </div>
+                <div class="turn"></div>
+            </header>
+            <div class="container">
+                <div class="board"></div>
+                <button class="start-game">Restart Game</button>
             </div>
-            <div class="turn"></div>
-        </header>
-        <div class="container">
-            <div class="board"></div>
-            <button class="start-game">Restart Game</button>
-        </div>
-        <script src="script.js"></script>
-    </body>
-    </html>
+            <script src="script.js"></script>
+        </body>
+        </html>
 
 ### CSS
 The CSS file defines the styling for the game, including the board layout and appearance.
     ```sh
-    * {
-        font-family: "Gluten", cursive;
-        font-optical-sizing: auto;
-        font-weight: 500;
-        font-style: normal;
-        font-variation-settings: "slnt" 0;
-        font-size: 20px;
-    }
-    
-    body {
-        display: flex;
-        flex-direction: column;
-    }
+        * {
+            font-family: "Gluten", cursive;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-variation-settings: "slnt" 0;
+            font-size: 20px;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-        width: 60%;
-        margin: 20px auto 0;
-        padding-top: 20px;
-    }
+        header {
+            width: 60%;
+            margin: 20px auto 0;
+            padding-top: 20px;
+        }
 
-    header div:first-child h1 {
-        text-align: center;
-        font-weight: 900;
-        font-size: 50px;
-    }
+        header div:first-child h1 {
+            text-align: center;
+            font-weight: 900;
+            font-size: 50px;
+        }
 
-    header div:last-child {
-        font-size: 30px;
-        padding-left: 60px;
-    }
-    .container {
-        margin-top: 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        justify-content: center;
-        align-items: center;
-    }
-    .board {
-        display: grid;
-        height: 500px;
-        width: 500px;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        padding: 2px;
-    }
-    
-    .cell {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 2rem;
-        border-bottom: 2px solid black;
-        border-right: 2px solid black;
-    }
+        header div:last-child {
+            font-size: 30px;
+            padding-left: 60px;
+        }
+        .container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .board {
+            display: grid;
+            height: 500px;
+            width: 500px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 2px;
+        }
+        
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 2rem;
+            border-bottom: 2px solid black;
+            border-right: 2px solid black;
+        }
 
-    .cell:nth-child(3n){
-        border-right: none;
-    }
+        .cell:nth-child(3n){
+            border-right: none;
+        }
 
-    .cell:nth-last-child(-n + 3){
-        border-bottom: none;
-    }
+        .cell:nth-last-child(-n + 3){
+            border-bottom: none;
+        }
 
-    .play-game {
-        margin-top: 20px;
-        padding: 10px 20px;
-    }
+        .play-game {
+            margin-top: 20px;
+            padding: 10px 20px;
+        }
 
 ### JavaScript
 The JavaScript file contains the logic for the game, including the game board management, player turns, win and tie detection, and UI updates.
-    ```sh
-        // script.js
+```sh
+    // script.js
     function Gameboard() {
         const rows = 3;
         const columns = 3;
