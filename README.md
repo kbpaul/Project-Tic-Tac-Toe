@@ -29,7 +29,7 @@ This is a simple Tic Tac Toe game implemented using JavaScript, HTML, and CSS. T
 ## Code Overview
 ### HTML
 The HTML file contains the structure of the game, including the board, player turn display, and restart button.
-    ```sh
+    ```html
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -55,10 +55,11 @@ The HTML file contains the structure of the game, including the board, player tu
             <script src="script.js"></script>
         </body>
         </html>
+```
 
 ### CSS
 The CSS file defines the styling for the game, including the board layout and appearance.
-    ```sh
+    ```css
         * {
             font-family: "Gluten", cursive;
             font-optical-sizing: auto;
@@ -128,10 +129,11 @@ The CSS file defines the styling for the game, including the board layout and ap
             margin-top: 20px;
             padding: 10px 20px;
         }
+    ```
 
 ### JavaScript
 The JavaScript file contains the logic for the game, including the game board management, player turns, win and tie detection, and UI updates.
-```sh
+```javavscript
     // script.js
     function Gameboard() {
         const rows = 3;
@@ -295,3 +297,4 @@ The JavaScript file contains the logic for the game, including the game board ma
         };
 
         const resetGame =
+```
